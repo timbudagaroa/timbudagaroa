@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confraria Timbu da Garoa – Náutico em São Paulo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --vermelho:        #C8102E;
+      --vermelho-escuro: #8B0A1F;
+      --vermelho-medio:  #A50D25;
+      --vermelho-palido: #F9E5E8;
+      --vermelho-suave:  #F2C4CB;
+      --branco:          #FFFFFF;
+      --branco-off:      #FDF8F8;
+      --cinza-claro:     #F5F0F0;
+      --cinza-borda:     #E8DCDC;
+      --cinza-texto:     #5A4A4A;
+      --cinza-muted:     #8A7070;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--branco);
+      color: var(--vermelho-escuro);
+      font-family: 'Barlow', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* CURSOR */
+    body { cursor: none; }
+    #cursor {
+      position: fixed;
+      width: 16px; height: 16px;
+      background: var(--vermelho);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 4rem;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 3px solid var(--vermelho);
+      transition: padding 0.3s;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 48px;
+      width: auto;
+    }
+    .nav-logo-texto {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      color: var(--vermelho);
+      line-height: 1;
+    }
+    .nav-logo-texto span { color: var(--vermelho-escuro); font-size: 0.85rem; display: block; letter-spacing: 3px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--vermelho-escuro);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--vermelho);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--vermelho); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: none; background: none; border: none; padding: 0; }
+    .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--vermelho); transition: 0.3s; }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+      background: var(--vermelho);
+    }
+    .hero-bandeira {
+      position: absolute; inset: 0;
+      background-image: url('bandeira.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.22;
+    }
+    .hero-pattern {
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 28px,
+        transparent 28px, transparent 56px
+      );
+    }
+    .hero-vinheta {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(139,10,31,0.28) 0%, rgba(139,10,31,0.72) 100%);
+    }
+    .hero-logo {
+      display: block;
+      width: 190px; height: auto;
+      margin: 0 auto 1.5rem;
+      filter: drop-shadow(0 4px 24px rgba(0,0,0,0.35));
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 2rem; max-width: 920px;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 0.4rem 1.2rem; margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      line-height: 0.9; letter-spacing: 4px;
+      color: var(--branco);
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .hero-title .confraria {
+      display: block;
+      font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+      letter-spacing: 10px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.4rem;
+    }
+    .hero-title .timbu { display: block; }
+    .hero-title .garoa {
+      display: block;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      color: rgba(255,255,255,0.82);
+    }
+    .hero-sub {
+      font-size: 1.1rem; color: rgba(255,255,255,0.78);
+      max-width: 560px; margin: 1.5rem auto 0; line-height: 1.75;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.45s ease both;
+    }
+    .btn-branco {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; padding: 1rem 2.5rem;
+      background: var(--branco); color: var(--vermelho);
+      border: 2px solid var(--branco);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: all 0.25s; display: inline-block;
+    }
+    .btn-branco:hover { background: transparent; color: var(--branco); }
+    .btn-outline-branco {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; padding: 1rem 2.5rem;
+      background: transparent; color: var(--branco);
+      border: 2px solid rgba(255,255,255,0.5);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: all 0.25s; display: inline-block;
+    }
+    .btn-outline-branco:hover { border-color: var(--branco); }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: fadeUp 1s 0.8s ease both;
+    }
+    .scroll-hint span {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem;
+      letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.55), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    /* ── FAIXA ALVIRRUBRA ── */
+    .faixa {
+      display: flex; height: 8px;
+    }
+    .faixa div { flex: 1; }
+    .fv { background: var(--vermelho); }
+    .fb { background: var(--branco); border-top: 1px solid var(--cinza-borda); border-bottom: 1px solid var(--cinza-borda); }
+
+    /* ── LABELS E TÍTULOS ── */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.76rem; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--vermelho); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 22px; height: 2px; background: var(--vermelho);
+    }
+    .section-label.centro { justify-content: center; }
+    .section-label.branca { color: rgba(255,255,255,0.75); }
+    .section-label.branca::before { background: rgba(255,255,255,0.5); }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 3px; line-height: 1; margin-bottom: 1.5rem;
+      color: var(--vermelho-escuro);
+    }
+    .section-title.branca { color: var(--branco); }
+
+    /* ── SOBRE ── */
+    #sobre-wrap { padding: 7rem 4rem; background: var(--branco-off); }
+    #sobre {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center; max-width: 1200px; margin: 0 auto;
+    }
+    .sobre-text p {
+      color: var(--cinza-texto); line-height: 1.85;
+      margin-bottom: 1.2rem; font-size: 1.03rem;
+    }
+
+    .escudo-wrapper { position: relative; width: 260px; height: 260px; margin: 0 auto; }
+    .escudo-ring {
+      position: absolute; inset: -18px; border-radius: 50%;
+      border: 1px dashed rgba(200,16,46,0.3);
+      animation: ringRotate 20s linear infinite;
+    }
+    .escudo-ring::before {
+      content: ''; position: absolute; top: 0; left: 50%;
+      width: 8px; height: 8px; background: var(--vermelho);
+      border-radius: 50%; transform: translate(-50%, -50%);
+    }
+    .escudo-svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 22px rgba(200,16,46,0.2)); }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--cinza-borda);
+      border: 1px solid var(--cinza-borda); margin-top: 2.5rem;
+    }
+    .stat-item {
+      padding: 1.4rem; background: var(--branco);
+      text-align: center; transition: background 0.3s;
+    }
+    .stat-item:hover { background: var(--vermelho-palido); }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem;
+      color: var(--vermelho); display: block; line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.73rem;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--cinza-muted); margin-top: 0.3rem; display: block;
+    }
+
+    /* ── ONDE ASSISTIR ── */
+    #onde { padding: 7rem 4rem; background: var(--vermelho); }
+    .onde-inner { max-width: 1200px; margin: 0 auto; }
+    .onde-header { text-align: center; margin-bottom: 4rem; }
+
+    .lugares-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3px; background: rgba(255,255,255,0.2);
+    }
+    .lugar-card {
+      background: var(--branco); padding: 2.5rem;
+      position: relative; overflow: hidden; transition: all 0.3s;
+    }
+    .lugar-card:hover { background: var(--branco-off); transform: translateY(-3px); }
+    .lugar-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: var(--vermelho); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+    }
+    .lugar-card:hover::after { transform: scaleX(1); }
+    .lugar-destaque { background: var(--vermelho-palido); }
+
+    .lugar-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 5rem;
+      color: rgba(200,16,46,0.08); position: absolute; top: 0.5rem; right: 1rem; line-height: 1;
+    }
+    .lugar-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .lugar-nome {
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem;
+      letter-spacing: 2px; margin-bottom: 0.3rem; color: var(--vermelho-escuro);
+    }
+    .lugar-sub {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--vermelho); margin-bottom: 1rem; font-weight: 600;
+    }
+    .lugar-desc { color: var(--cinza-texto); font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .lugar-tag {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; border: 1px solid rgba(200,16,46,0.35);
+      color: var(--vermelho); margin-right: 0.4rem; margin-bottom: 0.4rem;
+    }
+    .tag-principal {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.3rem 0.9rem; background: var(--vermelho); color: var(--branco); margin-bottom: 1rem;
+    }
+
+    .btn-vermelho {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; padding: 0.65rem 1.4rem;
+      background: transparent; color: var(--vermelho);
+      border: 1.5px solid var(--vermelho);
+      clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+      transition: all 0.25s; display: inline-block;
+    }
+    .btn-vermelho:hover { background: var(--vermelho); color: var(--branco); }
+
+    /* ── AGENDA ── */
+    #agenda-wrap { padding: 7rem 4rem; background: var(--branco-off); }
+    #agenda { max-width: 1200px; margin: 0 auto; }
+    .agenda-header { margin-bottom: 3rem; }
+    .agenda-header p { color: var(--cinza-texto); max-width: 500px; margin-top: 1rem; line-height: 1.75; }
+
+    .jogos-lista { display: flex; flex-direction: column; gap: 1px; background: var(--cinza-borda); border: 1px solid var(--cinza-borda); }
+    .jogo-item {
+      display: grid; grid-template-columns: 100px 1fr auto;
+      align-items: center; gap: 2rem; padding: 1.4rem 2rem;
+      background: var(--branco); transition: all 0.3s; position: relative;
+    }
+    .jogo-item:hover { background: var(--vermelho-palido); }
+    .jogo-item::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 0; background: var(--vermelho); transition: width 0.3s;
+    }
+    .jogo-item:hover::before { width: 4px; }
+    .jogo-data { text-align: center; padding-right: 1.5rem; border-right: 1px solid var(--cinza-borda); }
+    .jogo-dia { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--vermelho); line-height: 1; }
+    .jogo-mes { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--cinza-muted); }
+    .jogo-times { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: 1px; text-transform: uppercase; color: var(--vermelho-escuro); }
+    .jogo-local { font-size: 0.84rem; color: var(--cinza-muted); margin-top: 0.2rem; }
+    .jogo-local span { color: var(--vermelho); font-weight: 600; }
+    .jogo-badge {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem;
+      letter-spacing: 2px; text-transform: uppercase; padding: 0.4rem 1rem;
+      background: var(--vermelho-palido); border: 1px solid var(--vermelho-suave);
+      color: var(--vermelho); white-space: nowrap;
+    }
+
+    .btn-outline-vermelho {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; padding: 1rem 2.5rem;
+      background: transparent; color: var(--vermelho);
+      border: 2px solid var(--vermelho);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: all 0.25s; display: inline-block;
+    }
+    .btn-outline-vermelho:hover { background: var(--vermelho); color: var(--branco); }
+
+    /* ── QUEM SOMOS ── */
+    #quem-somos { padding: 7rem 4rem; background: var(--vermelho); }
+    .quem-inner { max-width: 1200px; margin: 0 auto; }
+    .quem-header { text-align: center; margin-bottom: 4rem; }
+    .quem-header p { color: rgba(255,255,255,0.75); max-width: 540px; margin: 1rem auto 0; line-height: 1.75; }
+
+    .membros-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px; background: rgba(255,255,255,0.2);
+    }
+    .membro-card {
+      background: var(--branco); padding: 2.5rem 2rem;
+      text-align: center; transition: all 0.3s;
+    }
+    .membro-card:hover { background: var(--vermelho-palido); }
+    .membro-card:hover .membro-avatar { border-color: var(--vermelho); }
+    .membro-avatar {
+      width: 84px; height: 84px; border-radius: 50%;
+      border: 2px solid var(--cinza-borda); margin: 0 auto 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+      color: var(--vermelho); background: var(--vermelho-palido);
+      transition: border-color 0.3s;
+    }
+    .membro-nome {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 1.05rem; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 0.3rem; color: var(--vermelho-escuro);
+    }
+    .membro-role { font-size: 0.84rem; color: var(--vermelho); font-style: italic; margin-bottom: 0.8rem; }
+    .membro-bio { font-size: 0.87rem; color: var(--cinza-texto); line-height: 1.65; }
+
+    /* ── INSTAGRAM ── */
+    #instagram-wrap { padding: 7rem 4rem; background: var(--cinza-claro); }
+    #instagram { max-width: 1200px; margin: 0 auto; }
+    .insta-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
+    }
+    .btn-insta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 0.92rem; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; padding: 0.9rem 2rem;
+      background: transparent; color: var(--vermelho); border: 2px solid var(--vermelho);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: all 0.25s;
+    }
+    .btn-insta:hover { background: var(--vermelho); color: var(--branco); }
+
+    .insta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+    .insta-item {
+      aspect-ratio: 1; position: relative; overflow: hidden; cursor: none;
+    }
+    .insta-item::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(200,16,46,0.82); opacity: 0; transition: opacity 0.3s; z-index: 1;
+    }
+    .insta-item:hover::before { opacity: 1; }
+    .insta-item::after {
+      content: '📸'; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%) scale(0.5);
+      font-size: 2rem; z-index: 2; opacity: 0; transition: all 0.3s;
+    }
+    .insta-item:hover::after { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    .insta-placeholder {
+      width: 100%; height: 100%; min-height: 140px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 0.5rem;
+    }
+    .insta-placeholder .emoji { font-size: 2.2rem; }
+    .insta-placeholder span {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--cinza-muted);
+    }
+    .ig-1 { background: #f9e8ea; } .ig-2 { background: #f5e0e3; }
+    .ig-3 { background: #faeced; } .ig-4 { background: #f2dfe2; }
+    .ig-5 { background: #f7e4e7; } .ig-6 { background: #f3dfe2; }
+    .ig-7 { background: #f9e9eb; } .ig-8 { background: #f0dde0; }
+
+    .insta-follow { text-align: center; margin-top: 2rem; }
+
+    /* ── CONTATO ── */
+    #contato { padding: 7rem 4rem; background: var(--vermelho); }
+    .contato-inner {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+    }
+    .contato-info p { color: rgba(255,255,255,0.82); line-height: 1.82; margin-bottom: 2rem; }
+
+    .contato-canais { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.2); }
+    .canal-item {
+      display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
+      background: rgba(255,255,255,0.1); text-decoration: none; color: var(--branco);
+      transition: all 0.3s; border-left: 3px solid transparent;
+    }
+    .canal-item:hover { background: rgba(255,255,255,0.2); border-left-color: var(--branco); }
+    .canal-icon { font-size: 1.2rem; }
+    .canal-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem;
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.55); display: block;
+    }
+    .canal-valor { font-size: 0.92rem; font-weight: 500; }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.65); margin-bottom: 0.4rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.28); color: var(--branco);
+      padding: 0.85rem 1.1rem; font-family: 'Barlow', sans-serif; font-size: 0.92rem;
+      transition: border-color 0.3s; outline: none; appearance: none;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.38); }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: rgba(255,255,255,0.75); }
+    .form-group textarea { height: 110px; resize: vertical; }
+    .form-group select { cursor: none; }
+    .form-group select option { background: var(--vermelho-escuro); color: var(--branco); }
+
+    .btn-enviar {
+      width: 100%; font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; padding: 1.1rem;
+      background: var(--branco); color: var(--vermelho); border: none; cursor: none;
+      transition: all 0.3s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+    }
+    .btn-enviar:hover { background: var(--branco-off); }
+
+    .form-success { display: none; text-align: center; padding: 2rem; border: 1px solid rgba(255,255,255,0.3); color: var(--branco); }
+    .form-success.show { display: block; }
+    .form-success .sucesso-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .form-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
+    .form-success p { color: rgba(255,255,255,0.8); margin-bottom: 0; }
+
+    /* ── FOOTER ── */
+    footer { padding: 3rem 4rem; background: var(--vermelho-escuro); }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: var(--branco); }
+    .footer-logo span { color: rgba(255,255,255,0.6); }
+    .footer-mid { text-align: center; }
+    .footer-slogan { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .footer-copy { font-size: 0.76rem; color: rgba(255,255,255,0.35); margin-top: 0.3rem; }
+    .footer-socials { display: flex; gap: 0.8rem; }
+    .social-btn {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 0.95rem;
+      color: rgba(255,255,255,0.5); transition: all 0.3s;
+    }
+    .social-btn:hover { border-color: var(--branco); color: var(--branco); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── SEÇÃO NOSSA CAMISA & BANDEIRA ── */
+    #identidade { padding: 7rem 4rem; background: var(--vermelho); }
+    .identidade-inner { max-width: 1200px; margin: 0 auto; }
+    .identidade-header { text-align: center; margin-bottom: 4rem; }
+
+    .identidade-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      background: rgba(255,255,255,0.2);
+    }
+    .identidade-card {
+      background: var(--branco);
+      padding: 3rem 2.5rem;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .identidade-card:hover { background: var(--vermelho-palido); }
+    .identidade-card img {
+      max-width: 100%;
+      max-height: 340px;
+      object-fit: contain;
+      margin: 0 auto 1.5rem;
+      display: block;
+      filter: drop-shadow(0 8px 24px rgba(200,16,46,0.2));
+      transition: transform 0.4s, filter 0.4s;
+    }
+    .identidade-card:hover img {
+      transform: translateY(-6px) scale(1.02);
+      filter: drop-shadow(0 16px 32px rgba(200,16,46,0.3));
+    }
+    .identidade-card-titulo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 3px;
+      color: var(--vermelho-escuro); margin-bottom: 0.4rem;
+    }
+    .identidade-card-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--cinza-muted);
+    }
+
+    a.insta-item { display: block; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      #identidade { padding: 4rem 1.5rem; }
+      .identidade-grid { grid-template-columns: 1fr; }
+      .membros-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── ANIMAÇÕES ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes ringRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes scrollPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links {
+        display: none; position: fixed; inset: 0;
+        background: rgba(255,255,255,0.98); flex-direction: column;
+        align-items: center; justify-content: center; gap: 2rem; z-index: 99;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1.4rem; }
+      .nav-toggle { display: flex; z-index: 101; }
+      #sobre-wrap, #agenda-wrap, #instagram-wrap { padding: 4rem 1.5rem; }
+      #onde, #contato, #quem-somos, footer { padding: 4rem 1.5rem; }
+      #sobre { grid-template-columns: 1fr; gap: 3rem; }
+      .sobre-escudo { order: -1; }
+      .escudo-wrapper { width: 180px; height: 180px; }
+      .lugares-grid { grid-template-columns: 1fr; }
+      .insta-grid { grid-template-columns: repeat(2, 1fr); }
+      .contato-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .jogo-item { grid-template-columns: 80px 1fr; }
+      .jogo-badge { display: none; }
+      .insta-header { flex-direction: column; align-items: flex-start; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">
+      <img src="logo1.png" alt="Confraria Timbu da Garoa" />
+      <div class="nav-logo-texto">Timbu <span>da Garoa</span></div>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#sobre-wrap">Sobre</a></li>
+      <li><a href="#identidade">Identidade</a></li>
+      <li><a href="#onde">Onde Assistir</a></li>
+      <li><a href="#agenda-wrap">Jogos</a></li>
+      <li><a href="#quem-somos">A Confraria</a></li>
+      <li><a href="#instagram-wrap">Instagram</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bandeira"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-vinheta"></div>
+    <div class="hero-content">
+      <img src="logo1.png" alt="Logo Confraria Timbu da Garoa" class="hero-logo" />
+      <div class="hero-badge">⚓ Desde 2011 · Náutico em São Paulo</div>
+      <h1 class="hero-title">
+        <span class="confraria">Confraria</span>
+        <span class="timbu">Timbu</span>
+        <span class="garoa">da Garoa</span>
+      </h1>
+      <p class="hero-sub">
+        Torcedores alvirrubros espalhados por São Paulo, unidos pela camisa do Náutico.
+        Porque não importa a distância — o Timbu pulsa em todo lugar.
+      </p>
+      <div class="hero-cta">
+        <a href="#contato" class="btn-branco">Junte-se a nós</a>
+        <a href="#onde" class="btn-outline-branco">Próximos jogos</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="faixa"><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div></div>
+
+  <!-- SOBRE -->
+  <div id="sobre-wrap">
+    <div id="sobre">
+      <div class="sobre-text reveal">
+        <div class="section-label">Nossa história</div>
+        <h2 class="section-title">Náutico em<br/>terra paulista</h2>
+        <p>A Confraria Timbu da Garoa nasceu em 2011 do amor incondicional ao Clube Náutico Capibaribe. Somos pernambucanos e admiradores espalhados pela Grande São Paulo que se recusam a torcer sozinhos.</p>
+        <p>Da garoa do Pico do Jaraguá ao calor dos Aflitos, nossa missão é levar as cores alvirrubras para qualquer telão, qualquer estádio, qualquer boteco que tiver sinal nas tardes de sábado.</p>
+        <p>Aqui a amizade é o segundo uniforme. Venha com a sua camisa, seu sotaque e seu coração alvirrubro.</p>
+        <div class="stats-grid">
+          <div class="stat-item"><span class="stat-num">2011</span><span class="stat-label">Fundação</span></div>
+          <div class="stat-item"><span class="stat-num">40+</span><span class="stat-label">Confrades</span></div>
+          <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">Paixão</span></div>
+        </div>
+      </div>
+      <div class="sobre-escudo reveal">
+        <div class="escudo-wrapper">
+          <div class="escudo-ring"></div>
+          <img src="logo1.png" alt="Logo Confraria Timbu da Garoa" class="escudo-svg" style="border-radius:50%; object-fit:contain;" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faixa"><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div></div>
+
+  <!-- NOSSA IDENTIDADE -->
+  <div id="identidade">
+    <div class="identidade-inner">
+      <div class="identidade-header reveal">
+        <div class="section-label centro branca">Quem nos representa</div>
+        <h2 class="section-title branca">Nossa Identidade<br/>Alvirrubra</h2>
+      </div>
+      <div class="identidade-grid">
+        <div class="identidade-card reveal">
+          <img src="camisa.jpg" alt="Camisa da Confraria Timbu da Garoa" />
+          <div class="identidade-card-titulo">Nossa Camisa</div>
+          <div class="identidade-card-sub">Uniforme oficial · Confraria Timbu da Garoa</div>
+        </div>
+        <div class="identidade-card reveal">
+          <img src="bandeira.png" alt="Bandeira da Confraria Timbu da Garoa" />
+          <div class="identidade-card-titulo">Nossa Bandeira</div>
+          <div class="identidade-card-sub">Pavilhão alvirrubro · São Paulo · 2011</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faixa"><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div></div>
+
+  <!-- ONDE ASSISTIR -->
+  <div id="onde">
+    <div class="onde-inner">
+      <div class="onde-header reveal">
+        <div class="section-label centro branca">Pontos de encontro</div>
+        <h2 class="section-title branca">Onde o Timbu<br/>joga em SP</h2>
+      </div>
+      <div class="lugares-grid">
+
+        <div class="lugar-card lugar-destaque reveal">
+          <div class="lugar-num">01</div>
+          <div class="tag-principal">⭐ Ponto principal</div>
+          <div class="lugar-icon">🍺</div>
+          <div class="lugar-nome">Boteco Frederico</div>
+          <div class="lugar-sub">Moema · São Paulo</div>
+          <p class="lugar-desc">Nosso quartel-general em São Paulo. Telão gigante, chope gelado e a galera da Confraria reunida a cada rodada do Timbu. O Frederico vira Recife quando o Náutico entra em campo.</p>
+          <div><span class="lugar-tag">Telão</span><span class="lugar-tag">Moema</span><span class="lugar-tag">Todo jogo</span></div>
+          <div style="margin-top: 1.5rem;">
+            <a href="https://maps.google.com/?q=Boteco+Frederico+Moema+São+Paulo" target="_blank" class="btn-vermelho">📍 Ver no mapa</a>
+          </div>
+        </div>
+
+        <div class="lugar-card reveal">
+          <div class="lugar-num">02</div>
+          <div class="lugar-icon">🏟️</div>
+          <div class="lugar-nome">Est. Nabi Abi Chedid</div>
+          <div class="lugar-sub">Bragança Paulista · SP</div>
+          <p class="lugar-desc">Quando o Náutico joga contra times que mandam em Bragança, a Confraria organiza caravana. A viagem de cerca de 90 km faz parte do ritual alvirrubro.</p>
+          <div><span class="lugar-tag">Caravana</span><span class="lugar-tag">~90km de SP</span></div>
+        </div>
+
+        <div class="lugar-card reveal">
+          <div class="lugar-num">03</div>
+          <div class="lugar-icon">🏟️</div>
+          <div class="lugar-nome">MorumBIS / Neo Química</div>
+          <div class="lugar-sub">São Paulo · SP</div>
+          <p class="lugar-desc">Em jogos do Náutico contra times paulistas, monitoramos a disponibilidade de ingressos e coordenamos ida em grupo pelos grupos do WhatsApp da Confraria.</p>
+          <div><span class="lugar-tag">Série B</span><span class="lugar-tag">Grupos WhatsApp</span></div>
+        </div>
+
+        <div class="lugar-card reveal">
+          <div class="lugar-num">04</div>
+          <div class="lugar-icon">🚗</div>
+          <div class="lugar-nome">Estádios do Grande ABC</div>
+          <div class="lugar-sub">Santo André / São Caetano</div>
+          <p class="lugar-desc">Bruno José Daniel e outros do Grande ABC entram no radar quando o calendário cruza com adversários da região. Aviso com antecedência nos grupos.</p>
+          <div><span class="lugar-tag">Caravana</span><span class="lugar-tag">Aviso antecipado</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="faixa"><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div></div>
+
+  <!-- AGENDA -->
+  <div id="agenda-wrap">
+    <div id="agenda">
+      <div class="agenda-header reveal">
+        <div class="section-label">Calendário alvirrubro</div>
+        <h2 class="section-title">Próximos<br/>encontros</h2>
+        <p>Acompanhe os próximos jogos e saiba onde vamos assistir cada partida. Entre no grupo do WhatsApp para avisos em tempo real.</p>
+      </div>
+      <div class="jogos-lista">
+        <div class="jogo-item reveal">
+          <div class="jogo-data"><div class="jogo-dia">30</div><div class="jogo-mes">Mai</div></div>
+          <div class="jogo-info"><div class="jogo-times">🔥 Sport × Náutico</div><div class="jogo-local">11ª rodada · Clássico dos Clássicos · <span>Boteco Frederico (Moema) · Telão</span> · Ilha do Retiro ~2.700km</div></div>
+          <div class="jogo-badge" style="background:var(--vermelho);color:var(--branco);border-color:var(--vermelho);">AO VIVO · 20h30</div>
+        </div>
+        <div class="jogo-item reveal">
+          <div class="jogo-data"><div class="jogo-dia">09</div><div class="jogo-mes">Jun</div></div>
+          <div class="jogo-info"><div class="jogo-times">Náutico × Fortaleza</div><div class="jogo-local">12ª rodada · Série B · <span>Boteco Frederico (Moema) · Telão</span> · Aflitos ~2.700km</div></div>
+          <div class="jogo-badge">Telão · 19h</div>
+        </div>
+        <div class="jogo-item reveal">
+          <div class="jogo-data"><div class="jogo-dia">14</div><div class="jogo-mes">Jun</div></div>
+          <div class="jogo-info"><div class="jogo-times">Novorizontino × Náutico</div><div class="jogo-local">13ª rodada · Série B · <span>Boteco Frederico (Moema) · Telão</span> · Novo Horizonte ~420km</div></div>
+          <div class="jogo-badge">Telão · 19h</div>
+        </div>
+        <div class="jogo-item reveal">
+          <div class="jogo-data"><div class="jogo-dia">20</div><div class="jogo-mes">Jun</div></div>
+          <div class="jogo-info"><div class="jogo-times">Vila Nova × Náutico</div><div class="jogo-local">14ª rodada · Série B · <span>Boteco Frederico (Moema) · Telão</span> · Goiânia ~900km</div></div>
+          <div class="jogo-badge">Telão · 19h</div>
+        </div>
+        <div class="jogo-item reveal">
+          <div class="jogo-data"><div class="jogo-dia">28</div><div class="jogo-mes">Jun</div></div>
+          <div class="jogo-info"><div class="jogo-times">Náutico × Goiás</div><div class="jogo-local">15ª rodada · Série B · <span>Boteco Frederico (Moema) · Telão</span> · Aflitos ~2.700km</div></div>
+          <div class="jogo-badge">Telão · 18h30</div>
+        </div>
+        <div class="jogo-item reveal">
+          <div class="jogo-data"><div class="jogo-dia">05</div><div class="jogo-mes">Jul</div></div>
+          <div class="jogo-info"><div class="jogo-times">Náutico × Juventude</div><div class="jogo-local">16ª rodada · Série B · <span>Boteco Frederico (Moema) · Telão</span> · Aflitos ~2.700km</div></div>
+          <div class="jogo-badge">Telão · 11h</div>
+        </div>
+      </div>
+      <div style="margin-top: 1.5rem; padding: 1.2rem 1.5rem; background: var(--vermelho-palido); border-left: 4px solid var(--vermelho); border: 1px solid var(--vermelho-suave);">
+        <p style="font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; letter-spacing:1px; color:var(--vermelho-escuro); line-height:1.6;">
+          🚌 <strong>Caravana ao estádio</strong> — organizamos caravana para jogos em estádios até 400km de São Paulo. Fique atento ao grupo do WhatsApp para os próximos anúncios!
+        </p>
+      </div>
+      <div style="text-align: center; margin-top: 2.5rem;">
+        <a href="#contato" class="btn-outline-vermelho">Receber avisos de jogos →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="faixa"><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div></div>
+
+  <!-- QUEM SOMOS -->
+  <div id="quem-somos">
+    <div class="quem-inner">
+      <div class="quem-header reveal">
+        <div class="section-label centro branca">Quem somos</div>
+        <h2 class="section-title branca">A Confraria<br/>apresenta-se</h2>
+        <p>Torcedores comuns, unidos por um amor nada comum. Conheça os confrades que mantêm as cores alvirrubras acesas em terra de corintianos e palmeirenses.</p>
+      </div>
+      <div class="membros-grid">
+        <div class="membro-card reveal">
+          <div class="membro-avatar">DV</div>
+          <div class="membro-nome">Daniel Vieira</div>
+          <div class="membro-role">Fundador</div>
+          <p class="membro-bio">Fundou a Confraria em 2011 em São Paulo, inspirado pela Confraria Timbu DF, que conheceu quando morou em Brasília. A semente que virou a maior confraria do Náutico no Brasil.</p>
+        </div>
+        <div class="membro-card reveal">
+          <div class="membro-avatar">BF</div>
+          <div class="membro-nome">Bruno Fernandez</div>
+          <div class="membro-role">Presidente Emérito · "Presida"</div>
+          <p class="membro-bio">Responsável pela primeira grande expansão da Confraria. Sempre reunindo os alvirrubros nos estádios e liberando seu bar como nossa primeira sede. Lenda viva.</p>
+        </div>
+        <div class="membro-card reveal">
+          <div class="membro-avatar">MC</div>
+          <div class="membro-nome">Marina Correia</div>
+          <div class="membro-role">Presidente · "Presilha"</div>
+          <p class="membro-bio">Nossa atual presidente — carinhosamente apelidada pelo pipi chapeiro colombiano de uma das nossas sedes. Governa com pulso firme o Presilhistão, nossa semi-democracia alvirrubra.</p>
+        </div>
+        <div class="membro-card reveal">
+          <div class="membro-avatar">GV</div>
+          <div class="membro-nome">Guilherme Verçosa</div>
+          <div class="membro-role">Diretor de Redes Sociais</div>
+          <p class="membro-bio">Mesmo morando em Recife, mantém o engajamento e o alcance das redes da Confraria. Peça-chave para tornarmos a maior confraria do Náutico no Brasil.</p>
+        </div>
+        <div class="membro-card reveal">
+          <div class="membro-avatar">DS</div>
+          <div class="membro-nome">Davi Serra</div>
+          <div class="membro-role">Diretor de Jogos & Eventos</div>
+          <p class="membro-bio">O maestro das caravanas, eventos e tudo que envolve a Confraria em campo. Se tem jogo, Davi Serra já está organizando.</p>
+        </div>
+        <div class="membro-card reveal">
+          <div class="membro-avatar">BT</div>
+          <div class="membro-nome">Breno Teixeira</div>
+          <div class="membro-role">Diretor da Filial Campinas</div>
+          <p class="membro-bio">Nosso pau para toda obra em Campinas. Resolve qualquer BO, realiza as melhores festas da torcida e mantém a chama alvirrubra acesa no interior paulista.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faixa"><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div></div>
+
+  <!-- INSTAGRAM -->
+  <div id="instagram-wrap">
+    <div id="instagram">
+      <div class="insta-header reveal">
+        <div>
+          <div class="section-label">Redes sociais</div>
+          <h2 class="section-title">Nos siga<br/>no Instagram</h2>
+        </div>
+        <a href="https://www.instagram.com/timbudagaroa" target="_blank" class="btn-insta">📸 @timbudagaroa</a>
+      </div>
+      <div class="insta-grid">
+        <a class="insta-item ig-1 reveal" href="https://www.instagram.com/timbudagaroa/p/DPbaPdQDeom/" target="_blank"><div class="insta-placeholder"><div class="emoji">⚓</div><span>Caravana</span></div></a>
+        <a class="insta-item ig-2 reveal" href="https://www.instagram.com/timbudagaroa/reel/DVUY5fyAQep/" target="_blank"><div class="insta-placeholder"><div class="emoji">🍺</div><span>Boteco</span></div></a>
+        <a class="insta-item ig-3 reveal" href="https://www.instagram.com/timbudagaroa/reel/C7k6YKKu0eE/" target="_blank"><div class="insta-placeholder"><div class="emoji">🏆</div><span>Vitória</span></div></a>
+        <a class="insta-item ig-4 reveal" href="https://www.instagram.com/timbudagaroa/reel/DT5ZX3JDbDV/" target="_blank"><div class="insta-placeholder"><div class="emoji">🎽</div><span>Camisa</span></div></a>
+        <a class="insta-item ig-5 reveal" href="https://www.instagram.com/timbudagaroa/reel/DJDlnAQu0TP/" target="_blank"><div class="insta-placeholder"><div class="emoji">🚌</div><span>Viagem</span></div></a>
+        <a class="insta-item ig-6 reveal" href="https://www.instagram.com/timbudagaroa/reel/C_HI5Tjukre/" target="_blank"><div class="insta-placeholder"><div class="emoji">🙌</div><span>Torcida</span></div></a>
+        <a class="insta-item ig-7 reveal" href="https://www.instagram.com/timbudagaroa/reel/DJDlnAQu0TP/" target="_blank"><div class="insta-placeholder"><div class="emoji">🏟️</div><span>Estádio</span></div></a>
+        <a class="insta-item ig-8 reveal" href="https://www.instagram.com/timbudagaroa/reel/DS0x0U_AZtf/" target="_blank"><div class="insta-placeholder"><div class="emoji">❤️</div><span>Confraria</span></div></a>
+      </div>
+      <div class="insta-follow reveal" style="margin-top: 2rem;">
+        <a href="https://www.instagram.com/timbudagaroa" target="_blank" class="btn-branco" style="background: var(--vermelho); color: var(--branco); border-color: var(--vermelho);">Seguir no Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="faixa"><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div><div class="fb"></div><div class="fv"></div></div>
+
+  <!-- CONTATO -->
+  <div id="contato">
+    <div class="contato-inner">
+      <div class="contato-info reveal">
+        <div class="section-label branca">Fale conosco</div>
+        <h2 class="section-title branca">Entre na<br/>Confraria</h2>
+        <p>Torcedor alvirrubro em São Paulo? Quer saber quando é o próximo encontro, entrar na caravana ou apenas torcer junto com a Confraria? Fala com a gente!</p>
+        <div class="contato-canais">
+          <a href="https://chat.whatsapp.com/E9FZHCPmA3FFP9xl4Bhynj?mode=gi_t" target="_blank" class="canal-item">
+            <div class="canal-icon">💬</div>
+            <div class="canal-texto"><span class="canal-label">WhatsApp</span><span class="canal-valor">Entrar no grupo da Confraria</span></div>
+          </a>
+          <a href="https://www.instagram.com/timbudagaroa" target="_blank" class="canal-item">
+            <div class="canal-icon">📸</div>
+            <div class="canal-texto"><span class="canal-label">Instagram</span><span class="canal-valor">@timbudagaroa</span></div>
+          </a>
+          <a href="mailto:confrariatimbudagaroa@gmail.com" class="canal-item">
+            <div class="canal-icon">✉️</div>
+            <div class="canal-texto"><span class="canal-label">E-mail</span><span class="canal-valor">confrariatimbudagaroa@gmail.com</span></div>
+          </a>
+          <a href="https://maps.google.com/?q=Boteco+Frederico+Moema+São+Paulo" target="_blank" class="canal-item">
+            <div class="canal-icon">📍</div>
+            <div class="canal-texto"><span class="canal-label">Ponto principal</span><span class="canal-valor">Boteco Frederico · Moema, SP</span></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form id="contactForm">
+          <div class="form-group"><label for="nome">Seu nome</label><input type="text" id="nome" placeholder="Como te chamam..." required /></div>
+          <div class="form-group"><label for="email">E-mail ou WhatsApp</label><input type="text" id="email" placeholder="Para te chamar quando tiver jogo..." required /></div>
+          <div class="form-group"><label for="bairro">Onde você está em SP</label><input type="text" id="bairro" placeholder="Seu bairro ou cidade..." /></div>
+          <div class="form-group">
+            <label for="interesse">Como quer participar?</label>
+            <select id="interesse">
+              <option value="">Escolha uma opção...</option>
+              <option value="boteco">Assistir no Boteco Frederico</option>
+              <option value="caravana">Participar das caravanas</option>
+              <option value="ambos">Tudo que aparecer!</option>
+              <option value="info">Só quero receber a agenda</option>
+            </select>
+          </div>
+          <div class="form-group"><label for="mensagem">Mensagem (opcional)</label><textarea id="mensagem" placeholder="Conta sua história com o Náutico..."></textarea></div>
+          <button type="submit" class="btn-enviar">⚓ Quero ser confrade!</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <div class="sucesso-icon">⚓</div>
+          <h3>Bem-vindo à Confraria!</h3>
+          <p>Recebemos sua mensagem. Em breve você já estará torcendo com a gente. <strong>Vai Timbu!</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div style="display:flex; align-items:center; gap:0.7rem;">
+        <img src="logo1.png" alt="Logo" style="height:44px; width:auto; filter:brightness(0) invert(1) opacity(0.9);" />
+        <div class="footer-logo">Timbu <span>da Garoa</span></div>
+      </div>
+      <div class="footer-mid">
+        <div class="footer-slogan">Confraria Timbu da Garoa · Náutico alvirrubro em SP</div>
+        <div class="footer-copy">© Desde 2011 · Feito com ❤️ alvirrubro · Vai Timbu!</div>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/timbudagaroa" target="_blank" class="social-btn" title="Instagram">📸</a>
+        <a href="https://chat.whatsapp.com/E9FZHCPmA3FFP9xl4Bhynj?mode=gi_t" target="_blank" class="social-btn" title="WhatsApp">💬</a>
+        <a href="mailto:confrariatimbudagaroa@gmail.com" class="social-btn" title="E-mail">✉️</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => { cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px'; });
+    document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%,-50%) scale(0.7)');
+    document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%,-50%) scale(1)');
+
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').style.padding = window.scrollY > 50 ? '0.6rem 4rem' : '1rem 4rem';
+    });
+  </script>
+</body>
+</html>
