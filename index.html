@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://timbudagaroa.github.io/timbudagaroa/logo1.png" />
 <meta property="og:url" content="https://timbudagaroa.github.io/timbudagaroa/" />
 <meta property="og:type" content="website" />
-  <link rel="icon" type="image/png" href="logo1 (1).png" />
+  <link rel="icon" type="image/png" href="logo1.png" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -1037,7 +1037,7 @@
   <footer>
     <div class="footer-inner">
       <div style="display:flex; align-items:center; gap:0.7rem;">
-        <img src="logo1 (1).png" alt="Logo" style="height:44px; width:auto;" />" />
+        <img src="logo1.png" alt="Logo" style="height:44px; width:auto;" />
         <div class="footer-logo">Timbu <span>da Garoa</span></div>
       </div>
       <div class="footer-mid">
@@ -1051,72 +1051,123 @@
       </div>
     </div>
   </footer>
+
   <script>
-async function carregarJogos() {
-  const container = document.getElementById('lista-jogos');
-  if (!container) return;
+    // ── REVEAL ON SCROLL ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
 
-  try {
-    const res = await fetch('jogos.json');
-    if (!res.ok) throw new Error('Não foi possível carregar o jogos.json');
-
-    const jogos = await res.json();
-    if (!Array.isArray(jogos) || jogos.length === 0) {
-      container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem;">Nenhum jogo agendado no momento.</p>';
-      return;
+    // ── CURSOR CUSTOMIZADO ──
+    const cursor = document.getElementById('cursor');
+    if (cursor) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
     }
 
-    const meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+    // ── MENU MOBILE ──
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => navLinks.classList.remove('open'));
+      });
+    }
 
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
+    // ── FORMULÁRIO DE CONTATO ──
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        contactForm.style.display = 'none';
+        if (formSuccess) formSuccess.classList.add('show');
+      });
+    }
 
-    const proximos = jogos.filter(j => {
-      const rawData = String(j.data || j.dataISO || '');
-      if (!rawData) return false;
-      const dataJogo = new Date(rawData.split('T')[0] + 'T00:00:00');
-      return dataJogo >= hoje;
-    }).slice(0, 5);
+    // ── CARREGAR JOGOS DO NÁUTICO (jogos.json) ──
+    async function carregarJogos() {
+      const container = document.getElementById('lista-jogos');
+      if (!container) return;
 
-    container.innerHTML = proximos.map(j => {
-      const rawData = String(j.data || j.dataISO || '');
-      const partes = rawData.split('T')[0].split('-');
-      if (partes.length < 3) return '';
+      try {
+        const res = await fetch('jogos.json');
+        if (!res.ok) throw new Error('Não foi possível carregar o jogos.json');
 
-      const [ano, mesStr, dia] = partes;
-      const mesNome = meses[parseInt(mesStr, 10) - 1] || mesStr;
+        const jogos = await res.json();
+        if (!Array.isArray(jogos) || jogos.length === 0) {
+          container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem;">Nenhum jogo agendado no momento.</p>';
+          return;
+        }
 
-      const mandante = j.mandante || 'Náutico';
-      const visitante = j.visitante || 'Adversário';
-      const estadio = j.estadio || 'A definir';
-      const hora = j.hora ? `• ${j.hora}` : '';
-      const localEncontro = j.localAssistir || 'Boteco Frederico (Moema)';
-      const tipoEncontro = j.tipoAssistir ? `(${j.tipoAssistir})` : '(Telão)';
+        const meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
 
-      return `
-        <div class="jogo-item reveal visible">
-          <div class="jogo-data">
-            <div class="jogo-dia">${dia}</div>
-            <div class="jogo-mes">${mesNome}</div>
-          </div>
-          <div class="jogo-info">
-            <div class="jogo-times">${mandante} x ${visitante}</div>
-            <div class="jogo-local">
-              ${estadio} ${hora} · Encontro: <span>${localEncontro} ${tipoEncontro}</span>
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+
+        const proximos = jogos.filter(j => {
+          const rawData = String(j.data || j.dataISO || '');
+          if (!rawData) return false;
+          const dataJogo = new Date(rawData.split('T')[0] + 'T00:00:00');
+          return dataJogo >= hoje;
+        }).slice(0, 6);
+
+        if (proximos.length === 0) {
+          container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem;">Nenhum jogo futuro encontrado.</p>';
+          return;
+        }
+
+        container.innerHTML = proximos.map(j => {
+          const rawData = String(j.data || j.dataISO || '');
+          const partes = rawData.split('T')[0].split('-');
+          if (partes.length < 3) return '';
+
+          const [ano, mesStr, dia] = partes;
+          const mesNome = meses[parseInt(mesStr, 10) - 1] || mesStr;
+
+          const mandante = j.mandante || 'Náutico';
+          const visitante = j.visitante || 'Adversário';
+          const estadio = j.estadio || 'A definir';
+          const hora = j.hora ? `• ${j.hora}` : '';
+          const localEncontro = j.localAssistir || 'Boteco Frederico (Moema)';
+          const tipoEncontro = j.tipoAssistir ? `(${j.tipoAssistir})` : '(Telão)';
+          const rodadaTexto = j.rodada ? `${j.rodada}ª rodada · Série B · ` : '';
+
+          return `
+            <div class="jogo-item reveal visible">
+              <div class="jogo-data">
+                <div class="jogo-dia">${dia}</div>
+                <div class="jogo-mes">${mesNome}</div>
+              </div>
+              <div class="jogo-info">
+                <div class="jogo-times">${mandante} × ${visitante}</div>
+                <div class="jogo-local">
+                  ${rodadaTexto}<span>${localEncontro} ${tipoEncontro}</span> · ${estadio}
+                </div>
+              </div>
+              <div class="jogo-badge">${(j.tipoAssistir || 'Telão')} ${hora}</div>
             </div>
-          </div>
-          <div class="jogo-badge">${j.rodada ? j.rodada + 'ª rodada' : 'Partida'}</div>
-        </div>
-      `;
-    }).join('');
+          `;
+        }).join('');
 
-  } catch (e) {
-    console.error(e);
-    container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem; font-weight:600;">Não foi possível carregar os jogos.</p>';
-  }
-}
+      } catch (e) {
+        console.error(e);
+        container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem; font-weight:600;">Não foi possível carregar os jogos.</p>';
+      }
+    }
 
-document.addEventListener('DOMContentLoaded', carregarJogos);
-</script>
+    document.addEventListener('DOMContentLoaded', carregarJogos);
+  </script>
 </body>
 </html>
