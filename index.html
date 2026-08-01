@@ -1087,7 +1087,7 @@ async function carregarJogos() {
   if (!container) return;
 
   try {
-    const res = await fetch('jogos.json');
+const res = await fetch('jogos.json');
     if (!res.ok) throw new Error('Não foi possível carregar o jogos.json');
 
     const jogos = await res.json();
@@ -1099,11 +1099,9 @@ async function carregarJogos() {
     const meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
 
     container.innerHTML = jogos.map(j => {
-      // Pega qualquer variação da chave de data tratada como texto
       const rawData = String(j.dataISO || j.data || j.dados || '');
       if (!rawData) return '';
 
-      // Extrai apenas AAAA-MM-DD mesmo se vier com hora ISO (ex: T16:00)
       const dataApenas = rawData.split('T')[0];
       const partes = dataApenas.split('-');
       if (partes.length < 3) return '';
@@ -1142,23 +1140,6 @@ async function carregarJogos() {
 }
 
 document.addEventListener('DOMContentLoaded', carregarJogos);
-            <div class="jogo-local">
-              ${estadio} ${hora ? `• ${hora}` : ''} | Encontro: <span>${localTransmissao} (${tipoTransmissao})</span>
-            </div>
-          </div>
-          <div class="jogo-badge">${j.campeonato || j.torneio || 'Partida'}</div>
-        </div>
-      `;
-    }).join('');
-
-  } catch (e) {
-    console.error(e);
-    container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem; font-weight:600;">Não foi possível carregar a lista de jogos.</p>';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', carregarJogos);
 </script>
-</script>  
 </body>
 </html>
