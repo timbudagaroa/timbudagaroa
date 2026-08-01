@@ -1090,7 +1090,7 @@ async function carregarJogos() {
     const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
     container.innerHTML = proximos.map(j => {
-      const [ano, mes, dia] = j.data.split('-');
+      const [ano, mes, dia] = (j.data || j.dados).split('-');
       const mesNome = meses[parseInt(mes, 10) - 1];
       const distanciaTexto = j.distancia ? ` · ${j.distancia}` : '';
       return `
