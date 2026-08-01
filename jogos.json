@@ -1,0 +1,16 @@
+[
+  {
+    "data": "2026-08-09",
+    "hora": "16:00",
+    "status": "scheduled",
+    "mandante": "Náutico",
+    "visitante": "Atlético-GO",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Esportes da Sorte Aflitos",
+    "rodada": 21,
+    "localAssistir": "Boteco Frederico (Moema)",
+    "tipoAssistir": "Telão",
+    "distancia": null
+  }
+]
