@@ -1,0 +1,23 @@
+{
+  "padrao": {
+    "local": "Boteco Frederico (Moema)",
+    "tipo": "Telão"
+  },
+  "por_rodada": {
+    "22": {
+      "local": "Boteco Frederico (Moema)",
+      "tipo": "Estádio",
+      "distancia": "Móises Lucarelli ~92km"
+    },
+    "24": {
+      "local": "Boteco Frederico (Moema)",
+      "tipo": "Estádio",
+      "distancia": "1 de Maio ~20km"
+    },
+    "25": {
+      "local": "Boteco Frederico (Moema)",
+      "tipo": "Telão",
+      "distancia": "Arena Sicredi ~470km"
+    }
+  }
+}
