@@ -1082,23 +1082,41 @@ async function carregarJogos() {
       return dataJogo >= hoje;
     }).slice(0, 5); // Exibe os próximos 5 jogos
 
-    if (proximos.length === 0) {
-      container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem; font-weight:600;">Nenhum próximo jogo encontrado.</p>';
+    async function carregarJogos() {
+  const container = document.getElementById('lista-jogos');
+  if (!container) return;
+
+  try {
+    const res = await fetch('jogos.json');
+    if (!res.ok) throw new Error('Não foi possível carregar o jogos.json');
+
+    const jogos = await res.json();
+    if (!Array.isArray(jogos) || jogos.length === 0) {
+      container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem;">Nenhum jogo agendado no momento.</p>';
       return;
     }
 
-    container.innerHTML = proximos.map(j => {
-      const strData = j.dataISO || j.data || j.dados;
-      const [ano, mesStr, dia] = strData.split('T')[0].split('-');
-      const mesNome = meses[parseInt(mesStr, 10) - 1] || '';
+    const meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
 
-      const mandante = j.mandante || j.homeTeam || 'Náutico';
-      const visitante = j.visitante || j.awayTeam || 'Adversário';
-      const estadio = j.estadio || j.stadium || 'A definir';
-      const hora = j.hora || j.time || '';
-      
-      const localTransmissao = j.localAssistir || j.localEncontro || j.local || 'Boteco Frederico (Moema)';
-      const tipoTransmissao = j.tipoAssistir || j.tipo || 'Telão';
+    container.innerHTML = jogos.map(j => {
+      // Pega qualquer variação da chave de data tratada como texto
+      const rawData = String(j.dataISO || j.data || j.dados || '');
+      if (!rawData) return '';
+
+      // Extrai apenas AAAA-MM-DD mesmo se vier com hora ISO (ex: T16:00)
+      const dataApenas = rawData.split('T')[0];
+      const partes = dataApenas.split('-');
+      if (partes.length < 3) return '';
+
+      const [ano, mesStr, dia] = partes;
+      const mesNome = meses[parseInt(mesStr, 10) - 1] || mesStr;
+
+      const mandante = j.mandante || 'Náutico';
+      const visitante = j.visitante || 'Adversário';
+      const estadio = j.estadio || 'A definir';
+      const hora = j.hora ? `• ${j.hora}` : '';
+      const localEncontro = j.localAssistir || j.local || 'Boteco Frederico (Moema)';
+      const tipoEncontro = j.tipoAssistir ? `(${j.tipoAssistir})` : '(Telão)';
 
       return `
         <div class="jogo-item">
@@ -1108,6 +1126,22 @@ async function carregarJogos() {
           </div>
           <div class="jogo-info">
             <div class="jogo-times">${mandante} x ${visitante}</div>
+            <div class="jogo-local">
+              ${estadio} ${hora} | Encontro: <span>${localEncontro} ${tipoEncontro}</span>
+            </div>
+          </div>
+          <div class="jogo-badge">${j.campeonato || 'Partida'}</div>
+        </div>
+      `;
+    }).join('');
+
+  } catch (e) {
+    console.error(e);
+    container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem; font-weight:600;">Não foi possível carregar os jogos.</p>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', carregarJogos);
             <div class="jogo-local">
               ${estadio} ${hora ? `• ${hora}` : ''} | Encontro: <span>${localTransmissao} (${tipoTransmissao})</span>
             </div>
