@@ -853,9 +853,7 @@
         <h2 class="section-title">Próximos<br/>encontros</h2>
         <p>Acompanhe os próximos jogos e saiba onde vamos assistir cada partida. Entre no grupo do WhatsApp para avisos em tempo real.</p>
       </div>
-        </div>
-        <div class="jogos-lista" id="lista-jogos"></div>
-      </div>
+      <div class="jogos-lista" id="lista-jogos"></div>
       <div style="margin-top: 1.5rem; padding: 1.2rem 1.5rem; background: var(--vermelho-palido); border-left: 4px solid var(--vermelho); border: 1px solid var(--vermelho-suave);">
         <p style="font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; letter-spacing:1px; color:var(--vermelho-escuro); line-height:1.6;">
           🚌 <strong>Caravana ao estádio</strong> — organizamos caravana para jogos em estádios até 400km de São Paulo. Fique atento ao grupo do WhatsApp ou ao nosso Instagram para os próximos anúncios!
@@ -1053,7 +1051,6 @@
       </div>
     </div>
   </footer>
-
   <script>
 async function carregarJogos() {
   const container = document.getElementById('lista-jogos');
@@ -1061,33 +1058,6 @@ async function carregarJogos() {
 
   try {
     const res = await fetch('jogos.json');
-    if (!res.ok) throw new Error('Não foi possível carregar os dados dos jogos.');
-    
-    const jogos = await res.json();
-    if (!Array.isArray(jogos) || jogos.length === 0) {
-      container.innerHTML = '<p style="color:var(--vermelho); text-align:center; padding:2rem; font-weight:600;">Nenhum jogo agendado no momento.</p>';
-      return;
-    }
-
-    const meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
-
-    // Filtra e ordena jogos a partir de hoje
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
-
-    const proximos = jogos.filter(j => {
-      const strData = j.dataISO || j.data || j.dados;
-      if (!strData) return false;
-      const dataJogo = new Date(strData.split('T')[0] + 'T00:00:00');
-      return dataJogo >= hoje;
-    }).slice(0, 5); // Exibe os próximos 5 jogos
-
-    async function carregarJogos() {
-  const container = document.getElementById('lista-jogos');
-  if (!container) return;
-
-  try {
-const res = await fetch('jogos.json');
     if (!res.ok) throw new Error('Não foi possível carregar o jogos.json');
 
     const jogos = await res.json();
@@ -1098,12 +1068,19 @@ const res = await fetch('jogos.json');
 
     const meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
 
-    container.innerHTML = jogos.map(j => {
-      const rawData = String(j.dataISO || j.data || j.dados || '');
-      if (!rawData) return '';
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
 
-      const dataApenas = rawData.split('T')[0];
-      const partes = dataApenas.split('-');
+    const proximos = jogos.filter(j => {
+      const rawData = String(j.data || j.dataISO || '');
+      if (!rawData) return false;
+      const dataJogo = new Date(rawData.split('T')[0] + 'T00:00:00');
+      return dataJogo >= hoje;
+    }).slice(0, 5);
+
+    container.innerHTML = proximos.map(j => {
+      const rawData = String(j.data || j.dataISO || '');
+      const partes = rawData.split('T')[0].split('-');
       if (partes.length < 3) return '';
 
       const [ano, mesStr, dia] = partes;
@@ -1113,11 +1090,11 @@ const res = await fetch('jogos.json');
       const visitante = j.visitante || 'Adversário';
       const estadio = j.estadio || 'A definir';
       const hora = j.hora ? `• ${j.hora}` : '';
-      const localEncontro = j.localAssistir || j.local || 'Boteco Frederico (Moema)';
+      const localEncontro = j.localAssistir || 'Boteco Frederico (Moema)';
       const tipoEncontro = j.tipoAssistir ? `(${j.tipoAssistir})` : '(Telão)';
 
       return `
-        <div class="jogo-item">
+        <div class="jogo-item reveal visible">
           <div class="jogo-data">
             <div class="jogo-dia">${dia}</div>
             <div class="jogo-mes">${mesNome}</div>
@@ -1125,10 +1102,10 @@ const res = await fetch('jogos.json');
           <div class="jogo-info">
             <div class="jogo-times">${mandante} x ${visitante}</div>
             <div class="jogo-local">
-              ${estadio} ${hora} | Encontro: <span>${localEncontro} ${tipoEncontro}</span>
+              ${estadio} ${hora} · Encontro: <span>${localEncontro} ${tipoEncontro}</span>
             </div>
           </div>
-          <div class="jogo-badge">${j.campeonato || 'Partida'}</div>
+          <div class="jogo-badge">${j.rodada ? j.rodada + 'ª rodada' : 'Partida'}</div>
         </div>
       `;
     }).join('');
