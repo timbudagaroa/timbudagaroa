@@ -1104,7 +1104,7 @@ async function carregarJogos() {
         </div>`;
     }).join('');
   } catch (e) {
-    container.innerHTML = '<p style="color:white;">Não foi possível carregar os jogos.</p>';
+    container.innerHTML = '<p style="color:var(--vermelho); font-weight:600; text-align:center;">Não foi possível carregar os jogos.</p>';
   }
 }
 carregarJogos();
