@@ -1,16 +1,16 @@
 [
   {
-    "data": "2026-08-14",
-    "hora": "19:30",
-    "status": "finished",
-    "mandante": "Ponte Preta",
-    "visitante": "Náutico",
-    "placarMandante": 1,
-    "placarVisitante": 1,
-    "estadio": "Moisés Lucarelli",
-    "rodada": 22,
+    "data": "2026-08-18",
+    "hora": "21:30",
+    "status": "scheduled",
+    "mandante": "Náutico",
+    "visitante": "Ceará",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Esportes da Sorte Aflitos",
+    "rodada": 23,
     "localAssistir": "Boteco Frederico (Moema)",
-    "tipoAssistir": "Estádio",
-    "distancia": "Móises Lucarelli ~92km"
+    "tipoAssistir": "Telão",
+    "distancia": null
   }
 ]
