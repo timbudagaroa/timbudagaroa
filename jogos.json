@@ -1,16 +1,16 @@
 [
   {
-    "data": "2026-08-23",
-    "hora": "16:00",
-    "status": "finished",
-    "mandante": "São Bernardo",
-    "visitante": "Náutico",
-    "placarMandante": 1,
-    "placarVisitante": 1,
-    "estadio": "Primeiro de Maio",
-    "rodada": 24,
+    "data": "2026-08-28",
+    "hora": "20:30",
+    "status": "scheduled",
+    "mandante": "Náutico",
+    "visitante": "Athletic Club",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Esportes da Sorte Aflitos",
+    "rodada": 25,
     "localAssistir": "Boteco Frederico (Moema)",
-    "tipoAssistir": "Estádio",
-    "distancia": "1 de Maio ~20km"
+    "tipoAssistir": "Telão",
+    "distancia": "Arena Sicredi ~470km"
   }
 ]
