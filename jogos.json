@@ -1,16 +1,16 @@
 [
   {
-    "data": "2026-08-28",
-    "hora": "20:30",
-    "status": "finished",
+    "data": "2026-09-03",
+    "hora": "20:00",
+    "status": "scheduled",
     "mandante": "Náutico",
-    "visitante": "Athletic Club",
-    "placarMandante": 2,
-    "placarVisitante": 1,
+    "visitante": "Botafogo-SP",
+    "placarMandante": null,
+    "placarVisitante": null,
     "estadio": "Esportes da Sorte Aflitos",
-    "rodada": 25,
+    "rodada": 26,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
-    "distancia": "Arena Sicredi ~470km"
+    "distancia": null
   }
 ]
