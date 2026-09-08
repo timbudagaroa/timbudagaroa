@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-09-03",
-    "hora": "20:00",
-    "status": "finished",
-    "mandante": "Náutico",
-    "visitante": "Botafogo-SP",
-    "placarMandante": 1,
-    "placarVisitante": 0,
-    "estadio": "Esportes da Sorte Aflitos",
-    "rodada": 26,
+    "data": "2026-09-09",
+    "hora": "20:30",
+    "status": "scheduled",
+    "mandante": "América-MG",
+    "visitante": "Náutico",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Independência",
+    "rodada": 27,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
