@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-09-09",
-    "hora": "20:30",
-    "status": "finished",
-    "mandante": "América-MG",
-    "visitante": "Náutico",
-    "placarMandante": 2,
-    "placarVisitante": 1,
-    "estadio": "Independência",
-    "rodada": 27,
+    "data": "2026-09-15",
+    "hora": "19:30",
+    "status": "scheduled",
+    "mandante": "Náutico",
+    "visitante": "Operário-PR",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Esportes da Sorte Aflitos",
+    "rodada": 28,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
