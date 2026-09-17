@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-09-15",
-    "hora": "19:30",
-    "status": "finished",
-    "mandante": "Náutico",
-    "visitante": "Operário-PR",
-    "placarMandante": 3,
-    "placarVisitante": 3,
-    "estadio": "Esportes da Sorte Aflitos",
-    "rodada": 28,
+    "data": "2026-09-21",
+    "hora": "21:30",
+    "status": "scheduled",
+    "mandante": "Cuiabá",
+    "visitante": "Náutico",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Arena Pantanal",
+    "rodada": 29,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
