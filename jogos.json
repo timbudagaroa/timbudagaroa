@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-09-21",
-    "hora": "21:30",
-    "status": "finished",
-    "mandante": "Cuiabá",
-    "visitante": "Náutico",
-    "placarMandante": 3,
-    "placarVisitante": 0,
-    "estadio": "Arena Pantanal",
-    "rodada": 29,
+    "data": "2026-09-26",
+    "hora": "16:30",
+    "status": "scheduled",
+    "mandante": "Náutico",
+    "visitante": "Sport",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Esportes da Sorte Aflitos",
+    "rodada": 30,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
