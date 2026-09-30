@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-09-26",
-    "hora": "16:30",
-    "status": "finished",
-    "mandante": "Náutico",
-    "visitante": "Sport",
-    "placarMandante": 3,
-    "placarVisitante": 1,
-    "estadio": "Aflitos",
-    "rodada": 30,
+    "data": "2026-10-02",
+    "hora": "21:35",
+    "status": "scheduled",
+    "mandante": "Fortaleza",
+    "visitante": "Náutico",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Castelão (CE)",
+    "rodada": 31,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
