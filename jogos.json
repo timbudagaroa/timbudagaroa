@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-10-08",
-    "hora": "19:30",
+    "data": "2026-10-11",
+    "hora": "17:30",
     "status": "scheduled",
     "mandante": "Náutico",
-    "visitante": "Novorizontino",
+    "visitante": "Vila Nova",
     "placarMandante": null,
     "placarVisitante": null,
     "estadio": "Aflitos",
-    "rodada": 32,
+    "rodada": 33,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
