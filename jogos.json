@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-10-11",
-    "hora": "17:30",
-    "status": "finished",
-    "mandante": "Náutico",
-    "visitante": "Vila Nova",
-    "placarMandante": 0,
-    "placarVisitante": 2,
-    "estadio": "Aflitos",
-    "rodada": 33,
+    "data": "2026-10-19",
+    "hora": "19:30",
+    "status": "scheduled",
+    "mandante": "Goiás",
+    "visitante": "Náutico",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Hailé Pinheiro (Serrinha)",
+    "rodada": 34,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
