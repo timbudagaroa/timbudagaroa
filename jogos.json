@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-10-19",
-    "hora": "19:30",
-    "status": "finished",
-    "mandante": "Goiás",
+    "data": "2026-10-26",
+    "hora": "20:30",
+    "status": "scheduled",
+    "mandante": "Juventude",
     "visitante": "Náutico",
-    "placarMandante": 0,
-    "placarVisitante": 0,
-    "estadio": "Hailé Pinheiro (Serrinha)",
-    "rodada": 34,
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Alfredo Jaconi",
+    "rodada": 35,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
