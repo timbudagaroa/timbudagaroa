@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-10-26",
-    "hora": "20:30",
-    "status": "finished",
-    "mandante": "Juventude",
-    "visitante": "Náutico",
-    "placarMandante": 4,
-    "placarVisitante": 0,
-    "estadio": "Alfredo Jaconi",
-    "rodada": 35,
+    "data": "2026-10-31",
+    "hora": "19:30",
+    "status": "scheduled",
+    "mandante": "Náutico",
+    "visitante": "Avaí",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "Aflitos",
+    "rodada": 36,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
