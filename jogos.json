@@ -1,14 +1,14 @@
 [
   {
-    "data": "2026-11-07",
-    "hora": "21:30",
-    "status": "finished",
-    "mandante": "Náutico",
-    "visitante": "CRB",
-    "placarMandante": 0,
-    "placarVisitante": 3,
-    "estadio": "Aflitos",
-    "rodada": 37,
+    "data": "2026-11-11",
+    "hora": "19:00",
+    "status": "scheduled",
+    "mandante": "Londrina",
+    "visitante": "Náutico",
+    "placarMandante": null,
+    "placarVisitante": null,
+    "estadio": "VGD",
+    "rodada": 38,
     "localAssistir": "Boteco Frederico (Moema)",
     "tipoAssistir": "Telão",
     "distancia": null
